@@ -2,6 +2,11 @@
   description = "Nix-on-Droid phone configuration";
 
   inputs = {
+    discord-bot = {
+      url = "path:./discord-bot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     nix-on-droid = {
@@ -10,7 +15,7 @@
     };
   };
 
-  outputs = { nixpkgs, nix-on-droid, ... }:
+  outputs = { discord-bot, nixpkgs, nix-on-droid, ... }:
     let
       phone =
         nix-on-droid.lib.nixOnDroidConfiguration {
@@ -18,7 +23,14 @@
             system = "aarch64-linux";
           };
 
-          modules = [ ./nix-on-droid.nix ];
+          modules = [
+            ./nix-on-droid.nix
+            {
+              environment.packages = [
+                discord-bot.packages.aarch64-linux.default
+              ];
+            }
+          ];
         };
     in
     {
