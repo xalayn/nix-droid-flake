@@ -168,7 +168,7 @@ in
         ${../secrets/discord-bot-token.age}
 
       ${pkgs.coreutils}/bin/chmod 400 "$token_tmp"
-      ${pkgs.coreutils}/bin/mv "$token_tmp" ${lib.escapeShellArg tokenFile}
+      ${pkgs.coreutils}/bin/mv -f "$token_tmp" ${lib.escapeShellArg tokenFile}
       trap - EXIT HUP INT TERM
     fi
   '';
