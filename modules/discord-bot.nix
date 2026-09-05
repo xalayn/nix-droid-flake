@@ -2,7 +2,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  bot = discord-bot.packages.${pkgs.system}.default;
+  bot = discord-bot.packages.${pkgs.stdenv.hostPlatform.system}.default;
   stateDir = "${config.user.home}/.local/state/hello-discord-bot";
   servicesDir = "${stateDir}/services";
   serviceDir = "${servicesDir}/hello-discord-bot";
