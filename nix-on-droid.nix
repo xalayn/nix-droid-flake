@@ -54,6 +54,8 @@ in
   '';
 
   environment.packages = [
+    pkgs.curl
+    pkgs.git
     pkgs.openssh
     sshdStart
     sshdForeground
