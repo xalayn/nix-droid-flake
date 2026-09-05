@@ -1,4 +1,0 @@
-# Never commit plaintext secrets or private identities.
-secrets/token
-secrets/*.key
-secrets/*.txt

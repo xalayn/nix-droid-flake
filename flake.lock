@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "discord-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788625360,
+        "narHash": "sha256-6uitmJPJUqIA7Iy5prqqrto4AWA5oqmm7xeQBpB8ZiU=",
+        "owner": "xalayn",
+        "repo": "nix-discord-bot-test",
+        "rev": "1bcefe0aac7d5932ef66a78a15bee7702c00a837",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xalayn",
+        "repo": "nix-discord-bot-test",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -174,6 +194,7 @@
     },
     "root": {
       "inputs": {
+        "discord-bot": "discord-bot",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs"
       }

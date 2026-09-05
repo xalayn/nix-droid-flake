@@ -1,0 +1,3 @@
+# Only encrypted age payloads belong in Git.
+/secrets/*
+!/secrets/*.age
