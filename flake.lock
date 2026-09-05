@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788625360,
-        "narHash": "sha256-6uitmJPJUqIA7Iy5prqqrto4AWA5oqmm7xeQBpB8ZiU=",
+        "lastModified": 1788635436,
+        "narHash": "sha256-JgkOrZ9qrQeO34A252QeWAYS1NJqwf+syR0rw+r1DWo=",
         "owner": "xalayn",
         "repo": "nix-discord-bot-test",
-        "rev": "1bcefe0aac7d5932ef66a78a15bee7702c00a837",
+        "rev": "9668b3c9a8bfe7ccb1ea034167f7efd821675dcd",
         "type": "github"
       },
       "original": {
