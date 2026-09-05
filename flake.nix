@@ -10,14 +10,21 @@
     };
   };
 
-  outputs = { nixpkgs, nix-on-droid, ... }: {
-    nixOnDroidConfigurations.phone =
-      nix-on-droid.lib.nixOnDroidConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-linux";
-        };
+  outputs = { nixpkgs, nix-on-droid, ... }:
+    let
+      phone =
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-linux";
+          };
 
-        modules = [ ./nix-on-droid.nix ];
+          modules = [ ./nix-on-droid.nix ];
+        };
+    in
+    {
+      nixOnDroidConfigurations = {
+        inherit phone;
+        default = phone;
       };
-  };
+    };
 }
