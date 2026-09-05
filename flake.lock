@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "discord-bot": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "./discord-bot",
-        "type": "path"
-      },
-      "original": {
-        "path": "./discord-bot",
-        "type": "path"
-      },
-      "parent": []
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -190,7 +174,6 @@
     },
     "root": {
       "inputs": {
-        "discord-bot": "discord-bot",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs"
       }
