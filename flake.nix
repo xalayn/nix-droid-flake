@@ -25,11 +25,7 @@
 
           modules = [
             ./nix-on-droid.nix
-            {
-              environment.packages = [
-                discord-bot.packages.aarch64-linux.default
-              ];
-            }
+            discord-bot.nixOnDroidModules.default
           ];
         };
     in
