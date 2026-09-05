@@ -49,6 +49,10 @@ let
   '';
 in
 {
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   environment.packages = [
     pkgs.openssh
     sshdStart
