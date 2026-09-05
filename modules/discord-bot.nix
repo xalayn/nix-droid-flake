@@ -10,8 +10,7 @@ let
   supervisorPidFile = "${stateDir}/runsvdir.pid";
   supervisorLogFile = "${stateDir}/runsvdir.log";
   legacySupervisorPidFile = "${stateDir}/supervisor.pid";
-  tokenFile = "${stateDir}/token";
-  identityFile = "${config.user.home}/.config/age/nix-droid-discord-bot.key";
+  tokenFile = config.age.secrets."discord-bot-token".path;
 
   runitPath = lib.makeBinPath [
     pkgs.coreutils
@@ -107,7 +106,6 @@ in
 {
   environment.packages = [
     bot
-    pkgs.age
     pkgs.runit
     serviceStart
     serviceStop
@@ -117,9 +115,14 @@ in
 
   user.shell = loginShell;
 
-  build.activation.discordBotSecret = ''
+  age.secrets."discord-bot-token" = {
+    file = ../secrets/discord-bot-token.age;
+    path = "${stateDir}/token";
+  };
+
+  build.activation.discordBotService = ''
     if [ -n "''${DRY_RUN:-}" ]; then
-      echo "Would decrypt the Discord bot token into ${tokenFile}"
+      echo "Would install the Discord bot runit service"
     else
       if [ -s ${lib.escapeShellArg legacySupervisorPidFile} ]; then
         legacy_pid="$(${pkgs.coreutils}/bin/cat ${lib.escapeShellArg legacySupervisorPidFile})"
@@ -139,11 +142,6 @@ in
         ${pkgs.coreutils}/bin/rm -f ${lib.escapeShellArg legacySupervisorPidFile}
       fi
 
-      if [ ! -r ${lib.escapeShellArg identityFile} ]; then
-        echo "Discord bot age identity missing: ${identityFile}" >&2
-        exit 1
-      fi
-
       ${pkgs.coreutils}/bin/install -d -m 700 \
         ${lib.escapeShellArg stateDir} \
         ${lib.escapeShellArg servicesDir} \
@@ -153,23 +151,6 @@ in
 
       ${pkgs.coreutils}/bin/ln -sfn ${serviceRun} ${lib.escapeShellArg "${serviceDir}/run"}
       ${pkgs.coreutils}/bin/ln -sfn ${logRun} ${lib.escapeShellArg "${serviceDir}/log/run"}
-
-      token_tmp="$(${pkgs.coreutils}/bin/mktemp ${lib.escapeShellArg "${stateDir}/.token.XXXXXX"})"
-
-      cleanup_token_tmp() {
-        ${pkgs.coreutils}/bin/rm -f "$token_tmp"
-      }
-      trap cleanup_token_tmp EXIT HUP INT TERM
-
-      ${pkgs.age}/bin/age \
-        --decrypt \
-        --identity ${lib.escapeShellArg identityFile} \
-        --output "$token_tmp" \
-        ${../secrets/discord-bot-token.age}
-
-      ${pkgs.coreutils}/bin/chmod 400 "$token_tmp"
-      ${pkgs.coreutils}/bin/mv -f "$token_tmp" ${lib.escapeShellArg tokenFile}
-      trap - EXIT HUP INT TERM
     fi
   '';
 

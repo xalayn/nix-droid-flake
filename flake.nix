@@ -25,6 +25,7 @@
 
           modules = [
             ./nix-on-droid.nix
+            ./modules/secrets.nix
             ./modules/phone-update.nix
             ./modules/ssh.nix
             (import ./modules/discord-bot.nix { inherit discord-bot; })
